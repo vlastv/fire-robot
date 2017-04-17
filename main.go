@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"gobot.io/x/gobot"
+	"gobot.io/x/gobot/api"
 	"gobot.io/x/gobot/drivers/gpio"
 	"gobot.io/x/gobot/platforms/raspi"
 
@@ -20,6 +21,11 @@ func main() {
 	dhtInterval := flag.String("interval-poll-sensor", "5m", "Interval polling DHT")
 
 	flag.Parse()
+
+	master := gobot.NewMaster()
+	web := api.NewAPI(master)
+
+	web.Start()
 
 	r := raspi.NewAdaptor()
 	r.SetName("RaspberryPi")
@@ -73,5 +79,44 @@ func main() {
 		work,
 	)
 
-	robot.Start()
+	robot.AddCommand("OpenDoor", func(map[string]interface{}) interface{} {
+		f.OpenDoor()
+
+		return nil
+	})
+
+	robot.AddCommand("CloseDoor", func(map[string]interface{}) interface{} {
+		f.CloseDoor()
+
+		return nil
+	})
+
+	robot.AddCommand("OpenFlap", func(map[string]interface{}) interface{} {
+		f.OpenFlap()
+
+		return nil
+	})
+
+	robot.AddCommand("CloseFlap", func(map[string]interface{}) interface{} {
+		f.CloseFlap()
+
+		return nil
+	})
+
+	robot.AddCommand("OpenAll", func(map[string]interface{}) interface{} {
+		f.OpenDoor()
+		f.OpenFlap()
+
+		return nil
+	})
+
+	robot.AddCommand("CloseAll", func(map[string]interface{}) interface{} {
+		f.CloseDoor()
+		f.CloseFlap()
+
+		return nil
+	})
+
+	master.AddRobot(robot)
+	master.Start()
 }
