@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -21,14 +20,6 @@ func main() {
 	dhtInterval := flag.String("interval-poll-sensor", "5m", "Interval polling DHT")
 
 	flag.Parse()
-
-	fmt.Println(
-		time.Microsecond,
-		time.Millisecond,
-		time.Nanosecond,
-	)
-
-	master := gobot.NewMaster()
 
 	r := raspi.NewAdaptor()
 
@@ -75,11 +66,11 @@ func main() {
 		})
 	}
 
-	master.AddRobot(gobot.NewRobot("fire",
+	robot := gobot.NewRobot("fire",
 		[]gobot.Connection{r},
 		[]gobot.Device{m1, m2, s},
 		work,
-	))
+	)
 
-	master.Start()
+	robot.Start()
 }
