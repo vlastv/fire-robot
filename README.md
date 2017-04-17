@@ -1,6 +1,6 @@
 Usage:
 
-    Usage of ctl:
+    Usage of fire:
       -interval-poll-sensor string
         	Interval polling DHT (default "5m")
       -temp-close-all int

@@ -22,6 +22,7 @@ func main() {
 	flag.Parse()
 
 	r := raspi.NewAdaptor()
+	r.SetName("RaspberryPi")
 
 	m1 := gpio.NewMotorDriver(r, "")
 	m1.SetName("Door Motor")
