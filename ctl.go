@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"gobot.io/x/gobot"
-	"gobot.io/x/gobot/api"
 	"gobot.io/x/gobot/drivers/gpio"
 	"gobot.io/x/gobot/platforms/raspi"
 
@@ -16,7 +15,6 @@ import (
 )
 
 func main() {
-	debug := flag.Bool("debug", false, "Debug API")
 	doorOpenTemp := flag.Int("temp-open-door", 30, "Temperature for trigger open door")
 	flapOpenTemp := flag.Int("temp-open-flap", 40, "Temperature for trigger open flap")
 	allCloseTemp := flag.Int("temp-close-all", 24, "Temperature for trigget class all")
@@ -31,14 +29,6 @@ func main() {
 	)
 
 	master := gobot.NewMaster()
-
-	a := api.NewAPI(master)
-
-	if *debug {
-		a.Debug()
-	}
-
-	a.Start()
 
 	r := raspi.NewAdaptor()
 
